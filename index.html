@@ -3,54 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <title>Document</title>
-  <style>
-    #user-list {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-    }
-
-   .user-card {
-        border: 5px solid grey;
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-   .user-card img {
-        width: 100%;
-        height: auto;
-        border-radius: 20px;
-        box-shadow: 20px color green;
-    }
-
-   .buttons-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-   .info-button,.delete-button {
-        background-color: transparent;
-        border: 2px solid grey;
-        border-radius: 20px;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-   .info-button {
-        color: green;
-    }
-
-   .delete-button {
-        color: salmon;
-    }
-
-</style>
 </head>
-<body>
-  <div id="user-list"></div>
+<body> 
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="addUserForm">
+                <div class="form-group">
+                  <label for="userId">ID</label>
+                  <input type="number" class="form-control" id="userId" required>
+                </div>
+                <div class="form-group">
+                  <label for="userEmail">Email</label>
+                  <input type="email" class="form-control" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" required>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="addUserBtn">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+        Add User
+      </button>
+      
+  
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+        </tbody>
+      </table>
+      
   <script src="script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

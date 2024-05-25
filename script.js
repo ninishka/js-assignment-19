@@ -1,81 +1,88 @@
-//.1
 document.addEventListener('DOMContentLoaded', function() {
-  const userListDiv = document.getElementById('user-list');
-  const users = [
-      {
-          id: 7,
-          email: "michael.lawson@reqres.in",
-          first_name: "Michael",
-          last_name: "Lawson",
-          image: "imgs-of-people/download22.jpg"
-      },
-      {
-          id: 8,
-          email: "lindsay.ferguson@reqres.in",
-          first_name: "Lindsay",
-          last_name: "Ferguson",
-          image: "imgs-of-people/download55.jpg"
-      },
-      {
-          id: 9,
-          email: "tobias.funke@reqres.in",
-          first_name: "Tobias",
-          last_name: "Funke",
-          image: "imgs-of-people/download33.jpg"
-      },
-      {
-          id: 10,
-          email: "byron.fields@reqres.in",
-          first_name: "Byron",
-          last_name: "Fields",
-          image: "imgs-of-people/download77.jpg"
-      },
-      {
-          id: 11,
-          email: "george.edwards@reqres.in",
-          first_name: "George",
-          last_name: "Edwards",
-          image: "imgs-of-people/download44.jpg"
-      },
-      {
-          id: 12,
-          email: "rachel.howell@reqres.in",
-          first_name: "Rachel",
-          last_name: "Howell",
-          image: "imgs-of-people/download66.jpg"
+    const users = [
+        {
+            id: 7,
+            email: "michael.lawson@reqres.in",
+            first_name: "Michael",
+            last_name: "Lawson",
+        },
+        {
+            id: 8,
+            email: "lindsay.ferguson@reqres.in",
+            first_name: "Lindsay",
+            last_name: "Ferguson",
+        },
+        {
+            id: 9,
+            email: "tobias.funke@reqres.in",
+            first_name: "Tobias",
+            last_name: "Funke",
+        },
+        {
+            id: 10,
+            email: "byron.fields@reqres.in",
+            first_name: "Byron",
+            last_name: "Fields",
+        },
+        {
+            id: 11,
+            email: "george.edwards@reqres.in",
+            first_name: "George",
+            last_name: "Edwards",
+        },
+        {
+            id: 12,
+            email: "rachel.howell@reqres.in",
+            first_name: "Rachel",
+            last_name: "Howell",
+        }
+    ];
+  
+   
+    function renderUsers(users) {
+      const tbody = document.getElementById('userTableBody');
+      tbody.innerHTML = ''; 
+      users.forEach(user => {
+        const row = document.createElement('tr');
+        Object.values(user).forEach(value => {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        const deleteCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+          const index = users.findIndex(u => u.id === user.id);
+          if (index!== -1) {
+            users.splice(index, 1);
+            renderUsers(users);
+          }
+        });
+        deleteCell.appendChild(deleteButton);
+        row.appendChild(deleteCell);
+        tbody.appendChild(row);
+      });
+    }
+  
+    // Render initial users
+    renderUsers([...users]);
+  
+    // Handle form submission
+    $('#addUserBtn').click(function() {
+      const userId = $('#userId').val();
+      const userEmail = $('#userEmail').val();
+      const firstName = $('#firstName').val();
+      const lastName = $('#lastName').val();
+  
+      if (!userId ||!userEmail ||!firstName ||!lastName) {
+        alert('Please fill all fields.');
+        return;
       }
-  ];
-
-  users.forEach(user => {
-      const userCard = document.createElement('div');
-      userCard.classList.add('user-card');
-      
-      const userImage = document.createElement('img');
-      userImage.src = user.image;
-      userCard.appendChild(userImage);
-
-      const userInfo = document.createElement('p');
-      userInfo.textContent = `${user.first_name} ${user.last_name}`;
-      userCard.appendChild(userInfo);
-
-      const buttonsContainer = document.createElement('div');
-      buttonsContainer.classList.add('buttons-container');
-
-      const infoButton = document.createElement('button');
-      infoButton.classList.add('info-button');
-      infoButton.textContent = 'Info';
-      infoButton.onclick = () => alert(`Email: ${user.email}`);
-      buttonsContainer.appendChild(infoButton);
-
-      const deleteButton = document.createElement('button');
-      deleteButton.classList.add('delete-button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.onclick = () => {
-          userListDiv.removeChild(userCard);
-      };
-      buttonsContainer.appendChild(deleteButton);
-
-      userCard.appendChild(buttonsContainer);
-      userListDiv.appendChild(userCard);
+  
+      const newUser = {id: parseInt(userId), email: userEmail.trim(), first_name: firstName.trim(), last_name: lastName.trim()};
+      users.push(newUser);
+      renderUsers(users);
+      $('#addUserModal').modal('hide');
+    });
   });
-});
